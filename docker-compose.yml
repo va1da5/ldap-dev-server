@@ -21,7 +21,7 @@ services:
 
   certs:
     build:
-      context: ./generate-certs
+      context: ./certs-container
     volumes:
       - ./certs:/certs
     environment:
