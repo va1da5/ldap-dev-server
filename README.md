@@ -40,9 +40,9 @@ docker-compose build
   docker-compose up -d
   ```
 
-  The server is going to bind to the default LDAP ports (389/TCP & 636/TCP). If any of these ports are occupied by some other processes, those need to be updated to something else, like 10389/TCP & 10636/TCP. This can be achieved in [docker-compose.yml](./docker-compose.yml) file.
+  The server is going to bind to the default LDAP ports (`389/TCP` & `636/TCP`). If any of these ports are occupied by some other processes, those need to be updated to something else, like `10389/TCP` & `10636/TCP`. This can be achieved in [docker-compose.yml](./docker-compose.yml) file.
 
-- Once containers are started the phpLDAPServer is going to be available on [https://localhost:6443](https://localhost:6443).
+- Once containers are started the phpLDAPAdmin server is going to be available on [https://localhost:6443](https://localhost:6443).
 
   ```bash
   # Credentials
