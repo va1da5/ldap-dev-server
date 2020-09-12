@@ -1,0 +1,5 @@
+certs/*.crt
+certs/*.csr
+certs/*.jks
+certs/*.key
+certs/*.srl

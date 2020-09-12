@@ -1,0 +1,353 @@
+############
+# Schema Definitions
+############
+
+dn: cn=microsoft, ou=schema
+objectclass: metaSchema
+objectclass: top
+cn: microsoft
+
+############
+# Schema Attributes - https://docs.microsoft.com/en-us/windows/win32/adschema/attributes-all
+############
+
+dn: ou=attributetypes, cn=microsoft, ou=schema
+objectclass: organizationalUnit
+objectclass: top
+ou: attributetypes
+
+dn: m-oid=1.2.840.113556.1.4.221, ou=attributetypes, cn=microsoft, ou=schema
+objectclass: metaAttributeType
+objectclass: metaTop
+objectclass: top
+m-oid: 1.2.840.113556.1.4.221
+m-name: sAMAccountName
+m-equality: caseIgnoreMatch
+m-syntax: 1.3.6.1.4.1.1466.115.121.1.15
+m-singleValue: TRUE
+
+dn: m-oid=1.2.840.113556.1.4.653, ou=attributetypes, cn=microsoft, ou=schema
+objectclass: metaAttributeType
+objectclass: metaTop
+objectclass: top
+m-oid: 1.2.840.113556.1.4.653
+m-name: managedBy
+m-equality: caseIgnoreMatch
+m-syntax: 1.3.6.1.4.1.1466.115.121.1.12
+m-singleValue: TRUE
+
+dn: m-oid=1.2.840.113556.1.4.222, ou=attributetypes, cn=microsoft, ou=schema
+objectclass: metaAttributeType
+objectclass: metaTop
+objectclass: top
+m-oid: 1.2.840.113556.1.4.222
+m-name: memberOf
+m-equality: caseIgnoreMatch
+m-syntax: 1.3.6.1.4.1.1466.115.121.1.15
+m-singleValue: FALSE
+
+############
+# Schema Classes - https://docs.microsoft.com/en-us/windows/win32/adschema/classes-all
+############
+
+dn: ou=objectClasses, cn=microsoft, ou=schema
+objectclass: organizationalUnit
+objectclass: top
+ou: objectClasses
+
+dn: m-oid=1.2.840.113556.1.5.6, ou=objectClasses, cn=microsoft, ou=schema
+objectclass: metaObjectClass
+objectclass: metaTop
+objectclass: top
+m-oid: 1.2.840.113556.1.5.6
+m-name: microsoftSecurityPrincipal
+m-supObjectClass: top
+m-typeObjectClass: AUXILIARY
+m-must: sAMAccountName
+m-may: memberOf
+m-may: email
+
+dn: m-oid=1.2.840.113556.1.5.8,ou=objectClasses,cn=microsoft,ou=schema
+m-must: cn
+m-oid: 1.2.840.113556.1.5.8
+m-supobjectclass: top
+objectclass: metaObjectClass
+objectclass: metaTop
+objectclass: top
+m-name: group
+m-typeobjectclass: STRUCTURAL
+m-may: managedBy
+m-may: member
+m-may: description
+
+############
+# Domain ad.piedpiper.com
+############
+
+dn: dc=ad,dc=piedpiper,dc=com
+dc: ad
+objectClass: top
+objectClass: domain
+
+dn: ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=groups,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: groups
+
+dn: cn=developers,ou=groups,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: group
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: developers
+cn: developers
+managedBy: cn=pp0001,ou=Users,dc=ad,dc=piedpiper,dc=com
+member: cn=pp0001,ou=Users,dc=ad,dc=piedpiper,dc=com
+member: cn=pp0002,ou=users,dc=ad,dc=piedpiper,dc=com
+member: cn=pp0003,ou=users,dc=ad,dc=piedpiper,dc=com
+member: cn=pp0008,ou=users,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=architects,ou=groups,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: group
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: architects
+cn: architects
+managedBy: cn=pp0001,ou=Users,dc=ad,dc=piedpiper,dc=com
+member: cn=architects,ou=groups,dc=ad,dc=piedpiper,dc=com
+member: cn=pp0002,ou=users,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=designers,ou=groups,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: group
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: designers
+cn: designers
+member: cn=pp0007,ou=users,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=analysts,ou=groups,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: group
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: analysts
+cn: analysts
+member: cn=pp0010,ou=users,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=testers,ou=groups,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: group
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: testers
+cn: testers
+member: cn=pp0005,ou=users,dc=ad,dc=piedpiper,dc=com
+member: cn=pp0006,ou=users,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=admins,ou=groups,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: group
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: admins
+cn: admins
+member: cn=pp0001,ou=users,dc=ad,dc=piedpiper,dc=com
+member: cn=pp0002,ou=users,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=support,ou=groups,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: group
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: support
+cn: support
+member: cn=pp0009,ou=users,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=managers,ou=groups,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: group
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: managers
+cn: managers
+member: cn=pp0001,ou=users,dc=ad,dc=piedpiper,dc=com
+member: cn=pp0004,ou=users,dc=ad,dc=piedpiper,dc=com
+member: cn=pp0007,ou=users,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=engineers,ou=groups,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: group
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: engineers
+cn: engineers
+member: cn=pp0002,ou=users,dc=ad,dc=piedpiper,dc=com
+
+############
+# People
+############
+
+dn: cn=pp0001,ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: pp0001
+cn: pp0001
+uid: pp0001
+sn: Hendricks
+givenName: Richard
+email: Richard@piedpiper.com
+userPassword: Passw0rd!
+description: Founder & CEO
+memberOf: cn=admins,ou=groups,dc=ad,dc=piedpiper,dc=com
+memberOf: cn=managers,ou=groups,dc=ad,dc=piedpiper,dc=com
+memberOf: cn=developers,ou=groups,dc=ad,dc=piedpiper,dc=com
+memberOf: cn=architects,ou=groups,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=pp0002,ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: pp0002
+cn: pp0002
+uid: pp0002
+sn: Gilfoyle
+givenName: Bertram
+email: Bertram@piedpiper.com
+userPassword: Passw0rd!
+description: Chief Systems Architect
+memberOf: cn=admins,ou=groups,dc=ad,dc=piedpiper,dc=com
+memberOf: cn=developers,ou=groups,dc=ad,dc=piedpiper,dc=com
+memberOf: cn=architects,ou=groups,dc=ad,dc=piedpiper,dc=com
+memberOf: cn=engineers,ou=groups,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=pp0003,ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: pp0003
+cn: pp0003
+uid: pp0003
+sn: Chugtai
+givenName: Dinesh
+email: Dinesh@piedpiper.com
+userPassword: Passw0rd!
+description: Senior Programmer
+memberOf: cn=developers,ou=groups,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=pp0004,ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: pp0004
+cn: pp0004
+uid: pp0004
+sn: Dunn
+givenName: Jared
+email: Jared@piedpiper.com
+userPassword: Passw0rd!
+description: Chief Operating Officer
+memberOf: cn=managers,ou=groups,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=pp0005,ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: pp0005
+cn: pp0005
+uid: pp0005
+sn: Bighetti
+givenName: Nelson
+email: Nelson@piedpiper.com
+userPassword: Passw0rd!
+description: Majority Investor
+memberOf: cn=testers,ou=groups,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=pp0006,ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: pp0006
+cn: pp0006
+uid: pp0006
+sn: Yang
+givenName: Jian 
+email: Jian@piedpiper.com
+userPassword: Passw0rd!
+description: Freelance Tester
+memberOf: cn=testers,ou=groups,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=pp0007,ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: pp0007
+cn: pp0007
+uid: pp0007
+sn: -
+givenName: Dang
+email: Dang@piedpiper.com
+userPassword: Passw0rd!
+description: Head of Design Team 
+memberOf: cn=managers,ou=groups,dc=ad,dc=piedpiper,dc=com
+memberOf: cn=designers,ou=groups,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=pp0008,ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: pp0008
+cn: pp0008
+uid: pp0008
+sn: -
+givenName: Gabe
+email: Gabe@piedpiper.com
+userPassword: Passw0rd!
+description: Developer
+memberOf: cn=developers,ou=groups,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=pp0009,ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: pp0009
+cn: pp0009
+uid: pp0009
+sn: Basu
+givenName: Sanjay
+email: Sanjay@piedpiper.com
+userPassword: Passw0rd!
+description: Support
+memberOf: cn=support,ou=groups,dc=ad,dc=piedpiper,dc=com
+
+dn: cn=pp0010,ou=users,dc=ad,dc=piedpiper,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: microsoftSecurityPrincipal
+sAMAccountName: pp0010
+cn: pp0010
+uid: pp0010
+sn: Georgiew Radin
+givenName: Gleb
+email: Gleb@piedpiper.com
+userPassword: Passw0rd!
+description: Analyst
+memberOf: cn=analysts,ou=groups,dc=ad,dc=piedpiper,dc=com

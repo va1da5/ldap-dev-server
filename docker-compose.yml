@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  ldap-server:
+    build:
+      context: ./ldap-server
+    environment:
+      LDAP_PORT: 389
+      LDAPS_PORT: 636
+      LDIF_PATH: /ldif
+      DOMAIN: &DOMAIN ad.piedpiper.com
+      KEYSTORE_PASSWD: &KEYSTORE_PASSWD Passw0rd!
+    volumes:
+      - ./ldif-definitions:/ldif
+      - ./certs:/certs
+    depends_on:
+      - certs
+    ports:
+      - 389:389
+      - 636:636
+
+  certs:
+    build:
+      context: ./generate-certs
+    volumes:
+      - ./certs:/certs
+    environment:
+      DOMAIN: *DOMAIN
+      KEYSTORE_PASSWD: *KEYSTORE_PASSWD
+
+  ldap-explorer:
+    image: osixia/phpldapadmin
+    ports:
+      - 6443:443
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: ldap-server
